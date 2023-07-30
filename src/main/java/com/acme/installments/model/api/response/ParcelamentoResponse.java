@@ -4,6 +4,6 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class Response{
+public class ParcelamentoResponse {
     private List<Parcelamento> dados;
 }
