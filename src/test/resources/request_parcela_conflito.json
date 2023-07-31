@@ -1,0 +1,29 @@
+{
+  "listCobertura": [
+    {
+      "cobertura": 1,
+      "valor": 123.12
+    },
+    {
+      "cobertura": 4,
+      "valor": 345.45
+    }
+  ],
+  "listOpcaoParcelamento": [
+    {
+      "quantidadeMinimaParcelas": 1,
+      "quantidadeMaximaParcelas": 6,
+      "juros": 0
+    },
+    {
+      "quantidadeMinimaParcelas": 6,
+      "quantidadeMaximaParcelas": 9,
+      "juros": 0.01
+    },
+    {
+      "quantidadeMinimaParcelas": 10,
+      "quantidadeMaximaParcelas": 12,
+      "juros": 0.03
+    }
+  ]
+}

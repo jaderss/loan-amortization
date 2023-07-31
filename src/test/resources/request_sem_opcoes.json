@@ -1,0 +1,12 @@
+{
+  "listCobertura": [
+    {
+      "cobertura": 1,
+      "valor": 123.12
+    },
+    {
+      "cobertura": 4,
+      "valor": 345.45
+    }
+  ]
+}

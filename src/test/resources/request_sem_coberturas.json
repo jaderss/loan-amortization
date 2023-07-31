@@ -1,0 +1,19 @@
+{
+  "listOpcaoParcelamento": [
+    {
+      "quantidadeMinimaParcelas": 1,
+      "quantidadeMaximaParcelas": 6,
+      "juros": 0.01
+    },
+    {
+      "quantidadeMinimaParcelas": 7,
+      "quantidadeMaximaParcelas": 9,
+      "juros": 0.01
+    },
+    {
+      "quantidadeMinimaParcelas": 10,
+      "quantidadeMaximaParcelas": 12,
+      "juros": 0.03
+    }
+  ]
+}
