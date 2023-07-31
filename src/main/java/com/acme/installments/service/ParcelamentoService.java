@@ -16,25 +16,43 @@ import java.util.stream.IntStream;
 @Service
 public class ParcelamentoService {
 
-    public List<Parcelamento> calcularParcelamento(List<OpcaoParcelamento> opcoesParcelamento, List<Cobertura> coberturas) {
+    public List<Parcelamento> calcularParcelamentos(List<OpcaoParcelamento> opcoesParcelamento, List<Cobertura> coberturas) {
+        Range<Integer> rangeParcelas = determinarRangeParcelas(opcoesParcelamento);
+        return criarOpcoesParcelamento(rangeParcelas, coberturas, opcoesParcelamento);
+    }
+
+    private BigDecimal calcularValorTotal(List<Cobertura> coberturas, List<OpcaoParcelamento> opcoesParcelamento, int parcelas) {
         BigDecimal valorTotal = coberturas.stream()
                 .map(Cobertura::getValor)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-        Range<Integer> rangeParcelas = determinarRangeParcelas(opcoesParcelamento);
+        BigDecimal juros = opcoesParcelamento.stream()
+                .filter(o -> Range.of(o.getQuantidadeMinimaParcelas(), o.getQuantidadeMaximaParcelas()).contains(parcelas))
+                .map(OpcaoParcelamento::getJuros)
+                .findFirst()
+                .orElse(BigDecimal.ZERO);
+        if (juros.compareTo(BigDecimal.ZERO) > 0) {
+            valorTotal = valorTotal.multiply(juros.add(BigDecimal.ONE).pow(parcelas)).setScale(2, RoundingMode.HALF_EVEN);
+        }
+        return valorTotal;
+    }
 
+    private List<Parcelamento> criarOpcoesParcelamento(
+            Range<Integer> rangeParcelas, List<Cobertura> coberturas, List<OpcaoParcelamento> opcoesParcelamento) {
         List<Parcelamento> parcelamentos = new ArrayList<>();
-        IntStream.range(rangeParcelas.getMinimum(), rangeParcelas.getMaximum()).forEach(num -> {
+        IntStream.rangeClosed(rangeParcelas.getMinimum(), rangeParcelas.getMaximum()).forEach(num -> {
+            BigDecimal valorTotal = calcularValorTotal(coberturas, opcoesParcelamento, num);
             BigDecimal divisor = new BigDecimal(num);
             BigDecimal valorParcela = valorTotal.divide(divisor, 2, RoundingMode.DOWN);
             BigDecimal valorPrimeiraParcela = valorTotal.subtract(valorParcela.multiply(new BigDecimal(num - 1)));
             Parcelamento parcelamento = new Parcelamento();
             parcelamento.setValorParcelamentoTotal(valorTotal);
             parcelamento.setQuantidadeParcelas(num);
-            parcelamento.setValorDemaisParcelas(valorParcela);
+            if (num > 1) {
+                parcelamento.setValorDemaisParcelas(valorParcela);
+            }
             parcelamento.setValorPrimeiraParcela(valorPrimeiraParcela);
             parcelamentos.add(parcelamento);
         });
-
         return parcelamentos;
     }
 
@@ -56,7 +74,7 @@ public class ParcelamentoService {
         return Range.of(minimo, maximo);
     }
 
-    private static void detectarColisao(List<OpcaoParcelamento> opcoes, int opcaoCorrente) {
+    private void detectarColisao(List<OpcaoParcelamento> opcoes, int opcaoCorrente) {
         OpcaoParcelamento opcaoParcelamento = opcoes.get(opcaoCorrente);
         for (int i = opcaoCorrente + 1; i < opcoes.size(); i++) {
             OpcaoParcelamento outraOpcao = opcoes.get(i);
