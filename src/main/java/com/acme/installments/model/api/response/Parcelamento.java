@@ -1,13 +1,11 @@
 package com.acme.installments.model.api.response;
 
-import lombok.Data;
-
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.math.BigDecimal;
 
-@Data
-public class Parcelamento {
-    private Integer quantidadeParcelas;
-    private BigDecimal valorPrimeiraParcela;
-    private BigDecimal valorDemaisParcelas;
-    private BigDecimal valorParcelamentoTotal;
-}
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public record Parcelamento(
+        int quantidadeParcelas,
+        BigDecimal valorPrimeiraParcela,
+        BigDecimal valorDemaisParcelas,
+        BigDecimal valorParcelamentoTotal) {}
