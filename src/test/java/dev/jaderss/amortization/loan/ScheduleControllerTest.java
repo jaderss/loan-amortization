@@ -46,6 +46,7 @@ class ScheduleControllerTest {
                     SAC   | BRL | 1000.00 | 0.01 | 0   | $.errors.months                    | must be greater than or equal to 1
                     SAC   | BRL | 1000.00 | 0.01 | 601 | $.errors.months                    | must be less than or equal to 600
                     SAC   | JPY | 1000.50 | 0.01 | 12  | $.errors.principalInCurrencyScale  | principal must not have more decimal places than the currency allows
+                    SAC   | XAU | 1230    | 0.01 | 12  | $.errors.currencyWithMinorUnit     | currency must have a minor unit
                     """)
     void rejectsInvalidLoans(
             String system, String currency, String principal, String rate, String months, String path, String message) {

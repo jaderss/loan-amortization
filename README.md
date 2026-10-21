@@ -56,7 +56,7 @@ curl -s localhost:8080/loans/schedule -H 'Content-Type: application/json' \
 | Field | Type | Rule |
 |---|---|---|
 | `system` | `PRICE` or `SAC` | required |
-| `currency` | ISO 4217 code | required |
+| `currency` | ISO 4217 code | required, with a minor unit, so not `XAU` or `XXX` |
 | `principal` | number | at least 0.01, no more decimals than the currency allows |
 | `monthlyRate` | number | 0 to 1, so `0.01` is 1% a month |
 | `months` | integer | 1 to 600 |
@@ -74,7 +74,7 @@ curl -s localhost:8080/installments -H 'Content-Type: application/json' -d '{
 }'
 ```
 
-The response has one plan per installment count, from 1 to the largest `maxInstallments`, with the first installment, the other installments and the total. Options must not overlap. An installment count that no option covers is charged no interest.
+The response has one plan per installment count, from 1 to the largest `maxInstallments`, with the first installment, the other installments and the total. Each option covers 1 to 600 installments at a rate from 0 to 1, and options must not overlap. An installment count that no option covers is charged no interest.
 
 ### Errors
 

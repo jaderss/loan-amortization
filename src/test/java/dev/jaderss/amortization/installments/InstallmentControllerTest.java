@@ -42,6 +42,8 @@ class InstallmentControllerTest {
                     overlapping-options.json      | $.detail                               | Installment options 1-6 and 6-9 cover the same installment count
                     no-currency.json              | $.errors.currency                      | must not be null
                     too-many-decimals.json        | $.errors.coveragesInCurrencyScale      | coverage amounts must not have more decimal places than the currency allows
+                    too-many-installments.json    | $.errors['options[2].maxInstallments'] | must be less than or equal to 600
+                    rate-above-one.json           | $.errors['options[2].rate']            | must be less than or equal to 1
                     unknown-currency.json         | $.detail                               | Failed to read request
                     """)
     void rejectsInvalidRequestsWithProblemDetails(String request, String path, String message) throws IOException {

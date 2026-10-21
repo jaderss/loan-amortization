@@ -36,6 +36,13 @@ class MoneyTest {
     }
 
     @Test
+    void rejectsCurrenciesWithoutAMinorUnit() {
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> new Money(new BigDecimal("1230"), Currency.getInstance("XAU")))
+                .withMessage("XAU has no minor unit");
+    }
+
+    @Test
     void rejectsArithmeticAcrossCurrencies() {
         Money yen = new Money(BigDecimal.ONE, JPY);
         assertThatIllegalArgumentException()

@@ -17,8 +17,16 @@ public record ScheduleRequest(
         @NotNull @DecimalMin("0") @DecimalMax("1") BigDecimal monthlyRate,
         @NotNull @Min(1) @Max(600) Integer months) {
 
+    @AssertTrue(message = "currency must have a minor unit")
+    boolean isCurrencyWithMinorUnit() {
+        return currency == null || Money.hasMinorUnit(currency);
+    }
+
     @AssertTrue(message = "principal must not have more decimal places than the currency allows")
     boolean isPrincipalInCurrencyScale() {
-        return currency == null || principal == null || Money.fits(principal, currency);
+        return currency == null
+                || !Money.hasMinorUnit(currency)
+                || principal == null
+                || Money.fits(principal, currency);
     }
 }

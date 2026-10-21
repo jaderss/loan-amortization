@@ -14,6 +14,9 @@ public record Money(BigDecimal amount, Currency currency) implements Comparable<
     public Money {
         requireNonNull(amount, "amount");
         requireNonNull(currency, "currency");
+        if (!hasMinorUnit(currency)) {
+            throw new IllegalArgumentException(currency + " has no minor unit");
+        }
         if (!fits(amount, currency)) {
             throw new IllegalArgumentException(
                     "%s has more decimal places than %s allows".formatted(amount.toPlainString(), currency));
@@ -23,6 +26,10 @@ public record Money(BigDecimal amount, Currency currency) implements Comparable<
 
     public static boolean fits(BigDecimal amount, Currency currency) {
         return amount.stripTrailingZeros().scale() <= currency.getDefaultFractionDigits();
+    }
+
+    public static boolean hasMinorUnit(Currency currency) {
+        return currency.getDefaultFractionDigits() >= 0;
     }
 
     public static Money zero(Currency currency) {
