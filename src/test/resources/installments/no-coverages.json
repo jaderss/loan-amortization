@@ -1,0 +1,20 @@
+{
+  "currency": "BRL",
+  "options": [
+    {
+      "minInstallments": 1,
+      "maxInstallments": 6,
+      "rate": 0.01
+    },
+    {
+      "minInstallments": 7,
+      "maxInstallments": 9,
+      "rate": 0.01
+    },
+    {
+      "minInstallments": 10,
+      "maxInstallments": 12,
+      "rate": 0.03
+    }
+  ]
+}
