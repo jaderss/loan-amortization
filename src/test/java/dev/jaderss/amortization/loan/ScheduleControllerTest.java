@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.json.JsonCompareMode;
@@ -56,6 +57,18 @@ class ScheduleControllerTest {
     }
 
     @Test
+    void reportsErrorsInEnglishWhateverLanguageTheClientAsksFor() {
+        assertThat(mvc.post()
+                        .uri("/loans/schedule")
+                        .header(HttpHeaders.ACCEPT_LANGUAGE, "pt-BR")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(body("SAC", "BRL", "1000.00", "0.01", "601")))
+                .bodyJson()
+                .extractingPath("$.errors.months")
+                .isEqualTo("must be less than or equal to 600");
+    }
+
+    @Test
     void rejectsUnknownSystems() {
         assertThat(post("GERMAN", "BRL", "1000.00", "0.01", "12")).hasStatus(HttpStatus.BAD_REQUEST);
     }
@@ -64,9 +77,13 @@ class ScheduleControllerTest {
         return mvc.post()
                 .uri("/loans/schedule")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("""
-                        {"system": "%s", "currency": "%s", "principal": %s, "monthlyRate": %s, "months": %s}
-                        """.formatted(system, currency, principal, rate, months))
+                .content(body(system, currency, principal, rate, months))
                 .exchange();
+    }
+
+    private static String body(String system, String currency, String principal, String rate, String months) {
+        return """
+                {"system": "%s", "currency": "%s", "principal": %s, "monthlyRate": %s, "months": %s}
+                """.formatted(system, currency, principal, rate, months);
     }
 }
