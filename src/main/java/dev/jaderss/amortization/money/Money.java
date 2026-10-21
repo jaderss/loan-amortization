@@ -55,6 +55,10 @@ public record Money(BigDecimal amount, Currency currency) implements Comparable<
         return List.copyOf(shares);
     }
 
+    public Money min(Money other) {
+        return compareTo(other) <= 0 ? this : other;
+    }
+
     public boolean isNegative() {
         return amount.signum() < 0;
     }

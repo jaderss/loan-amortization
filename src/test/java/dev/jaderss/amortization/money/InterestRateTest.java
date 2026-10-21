@@ -1,6 +1,7 @@
 package dev.jaderss.amortization.money;
 
-import static dev.jaderss.amortization.money.MoneyTest.brl;
+import static dev.jaderss.amortization.Samples.ONE_PERCENT;
+import static dev.jaderss.amortization.Samples.brl;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
@@ -8,8 +9,6 @@ import java.math.BigDecimal;
 import org.junit.jupiter.api.Test;
 
 class InterestRateTest {
-
-    private static final InterestRate ONE_PERCENT = new InterestRate(new BigDecimal("0.01"));
 
     @Test
     void rejectsNegativeRates() {

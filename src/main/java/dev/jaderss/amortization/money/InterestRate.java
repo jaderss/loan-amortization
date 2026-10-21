@@ -26,6 +26,14 @@ public record InterestRate(BigDecimal perPeriod) {
         return BigDecimal.ONE.add(perPeriod).pow(periods, CONTEXT);
     }
 
+    public BigDecimal annuityFactor(int periods) {
+        if (isZero()) {
+            return BigDecimal.ONE.divide(BigDecimal.valueOf(periods), CONTEXT);
+        }
+        BigDecimal growth = growth(periods);
+        return perPeriod.multiply(growth, CONTEXT).divide(growth.subtract(BigDecimal.ONE, CONTEXT), CONTEXT);
+    }
+
     public Money interestOn(Money balance) {
         return balance.times(perPeriod);
     }

@@ -1,5 +1,7 @@
 package dev.jaderss.amortization.money;
 
+import static dev.jaderss.amortization.Samples.BRL;
+import static dev.jaderss.amortization.Samples.brl;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
@@ -12,12 +14,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class MoneyTest {
 
-    private static final Currency BRL = Currency.getInstance("BRL");
     private static final Currency JPY = Currency.getInstance("JPY");
-
-    static Money brl(String amount) {
-        return new Money(new BigDecimal(amount), BRL);
-    }
 
     @Test
     void holdsAmountAtCurrencyScale() {

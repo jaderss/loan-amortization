@@ -1,0 +1,11 @@
+{
+  "system": "PRICE",
+  "currency": "BRL",
+  "totalPaid": 1020.07,
+  "totalInterest": 20.07,
+  "installments": [
+    {"number": 1, "payment": 340.02, "interest": 10.00, "amortization": 330.02, "balance": 669.98},
+    {"number": 2, "payment": 340.02, "interest": 6.70, "amortization": 333.32, "balance": 336.66},
+    {"number": 3, "payment": 340.03, "interest": 3.37, "amortization": 336.66, "balance": 0.00}
+  ]
+}
