@@ -1,6 +1,6 @@
 # loan-amortization
 
-[![CI](https://github.com/jaderss/loan-amortization/actions/workflows/ci.yml/badge.svg)](https://github.com/jaderss/loan-amortization/actions/workflows/ci.yml)
+[![CI](https://github.com/jaderss/loan-amortization/actions/workflows/ci.yml/badge.svg)](https://github.com/jaderss/loan-amortization/actions/workflows/ci.yml) [![Quality gate](https://sonarcloud.io/api/project_badges/measure?project=jaderss_loan-amortization&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=jaderss_loan-amortization)
 
 A loan and installment calculator built on Spring Boot 4.1 and Java 25. It produces full amortization schedules with the two systems used for loans in Brazil, Price and SAC, and splits an insurance premium into installment plans. Every amount is a `BigDecimal` paired with its currency, and every rounding step is explicit.
 
