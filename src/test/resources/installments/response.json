@@ -1,0 +1,75 @@
+{
+  "plans": [
+    {
+      "installments": 1,
+      "firstInstallment": 468.57,
+      "total": 468.57
+    },
+    {
+      "installments": 2,
+      "firstInstallment": 234.29,
+      "otherInstallments": 234.28,
+      "total": 468.57
+    },
+    {
+      "installments": 3,
+      "firstInstallment": 156.19,
+      "otherInstallments": 156.19,
+      "total": 468.57
+    },
+    {
+      "installments": 4,
+      "firstInstallment": 117.15,
+      "otherInstallments": 117.14,
+      "total": 468.57
+    },
+    {
+      "installments": 5,
+      "firstInstallment": 93.73,
+      "otherInstallments": 93.71,
+      "total": 468.57
+    },
+    {
+      "installments": 6,
+      "firstInstallment": 78.12,
+      "otherInstallments": 78.09,
+      "total": 468.57
+    },
+    {
+      "installments": 7,
+      "firstInstallment": 71.81,
+      "otherInstallments": 71.76,
+      "total": 502.37
+    },
+    {
+      "installments": 8,
+      "firstInstallment": 63.45,
+      "otherInstallments": 63.42,
+      "total": 507.39
+    },
+    {
+      "installments": 9,
+      "firstInstallment": 56.95,
+      "otherInstallments": 56.94,
+      "total": 512.47
+    },
+    {
+      "installments": 10,
+      "firstInstallment": 62.99,
+      "otherInstallments": 62.97,
+      "total": 629.72
+    },
+    {
+      "installments": 11,
+      "firstInstallment": 59.01,
+      "otherInstallments": 58.96,
+      "total": 648.61
+    },
+    {
+      "installments": 12,
+      "firstInstallment": 55.70,
+      "otherInstallments": 55.67,
+      "total": 668.07
+    }
+  ]
+}

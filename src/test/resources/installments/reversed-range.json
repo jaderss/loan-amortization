@@ -1,0 +1,19 @@
+{
+  "coverages": [
+    {
+      "id": 1,
+      "amount": 123.12
+    },
+    {
+      "id": 4,
+      "amount": 345.45
+    }
+  ],
+  "options": [
+    {
+      "minInstallments": 7,
+      "maxInstallments": 6,
+      "rate": 0
+    }
+  ]
+}
