@@ -1,7 +1,8 @@
 package dev.jaderss.amortization.installments;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+import dev.jaderss.amortization.money.InterestRate;
+import dev.jaderss.amortization.money.Money;
+import java.util.Currency;
 import java.util.List;
 import java.util.stream.IntStream;
 import org.springframework.stereotype.Service;
@@ -9,9 +10,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class InstallmentService {
 
-    public List<InstallmentPlan> plans(List<Coverage> coverages, List<InstallmentOption> options) {
+    public List<InstallmentPlan> plans(Currency currency, List<Coverage> coverages, List<InstallmentOption> options) {
         rejectOverlaps(options);
-        BigDecimal premium = coverages.stream().map(Coverage::amount).reduce(BigDecimal.ZERO, BigDecimal::add);
+        Money premium = coverages.stream()
+                .map(coverage -> new Money(coverage.amount(), currency))
+                .reduce(Money.zero(currency), Money::plus);
         int longest = options.stream()
                 .mapToInt(InstallmentOption::maxInstallments)
                 .max()
@@ -21,21 +24,17 @@ public class InstallmentService {
                 .toList();
     }
 
-    private static InstallmentPlan plan(BigDecimal premium, BigDecimal rate, int installments) {
-        BigDecimal total = rate.signum() > 0
-                ? premium.multiply(BigDecimal.ONE.add(rate).pow(installments)).setScale(2, RoundingMode.HALF_EVEN)
-                : premium;
-        BigDecimal installment = total.divide(BigDecimal.valueOf(installments), 2, RoundingMode.DOWN);
-        BigDecimal first = total.subtract(installment.multiply(BigDecimal.valueOf(installments - 1)));
-        return new InstallmentPlan(installments, first, installments > 1 ? installment : null, total);
+    private static InstallmentPlan plan(Money premium, InterestRate rate, int installments) {
+        Money total = rate.compound(premium, installments);
+        return InstallmentPlan.of(total, total.split(installments));
     }
 
-    private static BigDecimal rateFor(List<InstallmentOption> options, int installments) {
+    private static InterestRate rateFor(List<InstallmentOption> options, int installments) {
         return options.stream()
                 .filter(option -> option.covers(installments))
-                .map(InstallmentOption::rate)
+                .map(option -> new InterestRate(option.rate()))
                 .findFirst()
-                .orElse(BigDecimal.ZERO);
+                .orElse(InterestRate.ZERO);
     }
 
     private static void rejectOverlaps(List<InstallmentOption> options) {

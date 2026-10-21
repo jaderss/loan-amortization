@@ -1,4 +1,5 @@
 {
+  "currency": "BRL",
   "plans": [
     {
       "installments": 1,
@@ -67,7 +68,7 @@
     },
     {
       "installments": 12,
-      "firstInstallment": 55.70,
+      "firstInstallment": 55.7,
       "otherInstallments": 55.67,
       "total": 668.07
     }

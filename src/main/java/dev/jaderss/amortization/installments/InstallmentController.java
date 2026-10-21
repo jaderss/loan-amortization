@@ -18,6 +18,7 @@ public class InstallmentController {
 
     @PostMapping
     public InstallmentResponse plans(@Valid @RequestBody InstallmentRequest request) {
-        return new InstallmentResponse(service.plans(request.coverages(), request.options()));
+        return new InstallmentResponse(
+                request.currency(), service.plans(request.currency(), request.coverages(), request.options()));
     }
 }

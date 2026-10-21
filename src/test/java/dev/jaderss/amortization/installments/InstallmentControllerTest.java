@@ -40,6 +40,9 @@ class InstallmentControllerTest {
                     missing-min-installments.json | $.errors['options[0].minInstallments'] | must not be null
                     reversed-range.json           | $.errors['options[0].ordered']         | minInstallments must not exceed maxInstallments
                     overlapping-options.json      | $.detail                               | Installment options 1-6 and 6-9 cover the same installment count
+                    no-currency.json              | $.errors.currency                      | must not be null
+                    too-many-decimals.json        | $.errors.coveragesInCurrencyScale      | coverage amounts must not have more decimal places than the currency allows
+                    unknown-currency.json         | $.detail                               | Failed to read request
                     """)
     void rejectsInvalidRequestsWithProblemDetails(String request, String path, String message) throws IOException {
         assertThat(post(request))
